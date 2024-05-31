@@ -16,7 +16,11 @@ var __extends = (this && this.__extends) || (function () {
 })();
 var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
     if (k2 === undefined) k2 = k;
-    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+      desc = { enumerable: true, get: function() { return m[k]; } };
+    }
+    Object.defineProperty(o, k2, desc);
 }) : (function(o, m, k, k2) {
     if (k2 === undefined) k2 = k;
     o[k2] = m[k];
@@ -48,7 +52,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     function verb(n) { return function (v) { return step([n, v]); }; }
     function step(op) {
         if (f) throw new TypeError("Generator is already executing.");
-        while (_) try {
+        while (g && (g = 0, op[0] && (_ = 0)), _) try {
             if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
             if (y = 0, t) op = [op[0] & 2, t.value];
             switch (op[0]) {
@@ -72,7 +76,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
-exports.__esModule = true;
+Object.defineProperty(exports, "__esModule", { value: true });
 exports.Exception = exports.safe = exports.renderIndex = exports.url = void 0;
 var path = __importStar(require("path")); // node.js internal module usefull to get file paths
 var express_list_endpoints_1 = __importDefault(require("express-list-endpoints")); //just a function that retrieves all the API routes
@@ -81,12 +85,12 @@ var ejs_1 = __importDefault(require("ejs")); //template engine
 // in a local computer is always "localhost" 
 // but in gitpod if varies depending on the workspace URL
 var url = function (port) {
-    var publicUrl = "http://localhost:" + port;
+    var publicUrl = "http://localhost:".concat(port);
     // Gitpod has internal environment variables https://www.gitpod.io/docs/environment-variables/
     // the Workspace URL is one of them (thank God)
     if (process.env.GITPOD_WORKSPACE_URL) {
         var _a = process.env.GITPOD_WORKSPACE_URL.split('://'), schema = _a[0], host = _a[1];
-        publicUrl = "https://" + port + "-" + host;
+        publicUrl = "https://".concat(port, "-").concat(host);
     }
     return publicUrl;
 };
@@ -95,7 +99,7 @@ exports.url = url;
 var renderIndex = function (_app, url) { return __awaiter(void 0, void 0, void 0, function () {
     var routes, data;
     return __generator(this, function (_a) {
-        routes = express_list_endpoints_1["default"](_app).map(function (item) {
+        routes = (0, express_list_endpoints_1.default)(_app).map(function (item) {
             var endpoints = [];
             item.methods.forEach(function (e) {
                 endpoints.push({ method: e, path: item.path });
@@ -108,11 +112,11 @@ var renderIndex = function (_app, url) { return __awaiter(void 0, void 0, void 0
             host: url,
             routes: routes,
             rigo: "https://github.com/4GeeksAcademy/expressjs-rest-hello/blob/master/docs/assets/rigo-baby.jpeg?raw=true",
-            starter: "https://start.4geeksacademy.com/starters/express"
+            starter: "https://start.4geeksacademy.com/starters/express",
         };
         return [2 /*return*/, new Promise(function (resolve, reject) {
                 // use the EJS template engine to generate the HTML/CSS
-                ejs_1["default"].renderFile(path.join(__dirname, "../docs/assets/template.ejs"), data, function (err, result) {
+                ejs_1.default.renderFile(path.join(__dirname, "../docs/assets/template.ejs"), data, function (err, result) {
                     if (err) {
                         reject(err);
                     }
