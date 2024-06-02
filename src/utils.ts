@@ -57,7 +57,7 @@ export const renderIndex = async (_app: any, url: string) => {
 export const safe = (fn:any) => async (req: Request, res: Response, next: NextFunction) => {
 	try{
 		const fnReturn = await fn(req, res)
-	}catch(err){
+	}catch(err: any){
 		res.status(err.status || 500);
 		res.json({ message: err.message || err.msg || err });
 		
